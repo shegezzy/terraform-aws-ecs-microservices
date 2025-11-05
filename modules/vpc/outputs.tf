@@ -23,22 +23,24 @@ output "internet_gateway_id" {
   value       = aws_internet_gateway.this.id
 }
 
-output "vpc_endpoint_s3_id" {
-  description = "ID of the S3 VPC endpoint"
-  value       = aws_vpc_endpoint.s3.id
-}
-
-output "vpc_endpoint_ecr_dkr_id" {
-  description = "ID of the ECR Docker VPC endpoint"
-  value       = aws_vpc_endpoint.ecr_dkr.id
-}
-
-output "vpc_endpoint_ecr_api_id" {
+output "ecr_api_endpoint_id" {
   description = "ID of the ECR API VPC endpoint"
   value       = aws_vpc_endpoint.ecr_api.id
 }
 
-output "vpc_endpoint_logs_id" {
+output "ecr_dkr_endpoint_id" {
+  description = "ID of the ECR DKR VPC endpoint"
+  value       = aws_vpc_endpoint.ecr_dkr.id
+}
+
+output "logs_endpoint_id" {
   description = "ID of the CloudWatch Logs VPC endpoint"
   value       = aws_vpc_endpoint.logs.id
 }
+
+output "s3_endpoint_id" {
+  description = "ID of the S3 VPC endpoint"
+  value       = aws_vpc_endpoint.s3.id
+}
+
+

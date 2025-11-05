@@ -29,14 +29,9 @@ variable "private_subnets" {
   description = "List of private subnet IDs for ECS tasks"
 }
 
-variable "execution_role_arn" {
+variable "alb_sg_id" {
   type        = string
-  description = "ARN of the ECS task execution role"
-}
-
-variable "task_role_arn" {
-  type        = string
-  description = "ARN of the ECS task role"
+  description = "Security group ID for ALB"
 }
 
 variable "services" {

@@ -1,0 +1,20 @@
+.terraform/
+.terraform/
+# Terraform local files
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# OS/IDE files
+.DS_Store
+.vscode/
+.idea/
+
+
+explanation of the arhictecture.md

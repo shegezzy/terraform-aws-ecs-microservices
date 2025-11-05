@@ -9,33 +9,6 @@ resource "aws_ecs_cluster" "this" {
   }
 }
 
-
-# Security Groups
-# ALB SG
-resource "aws_security_group" "alb_sg" {
-  name        = "${var.cluster_name}-alb-sg"
-  description = "Security group for ALB"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Environment = var.environment
-  }
-}
-
 # ECS Services SG
 resource "aws_security_group" "service_sg" {
   name        = "${var.cluster_name}-svc-sg"
@@ -46,7 +19,7 @@ resource "aws_security_group" "service_sg" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    security_groups = [aws_security_group.alb_sg.id]
+    security_groups = [var.alb_sg_id]
   }
 
   egress {
@@ -67,7 +40,7 @@ resource "aws_lb" "alb" {
   name               = "${var.cluster_name}-alb"
   load_balancer_type = "application"
   subnets            = var.public_subnets
-  security_groups    = [aws_security_group.alb_sg.id]
+  security_groups    = [var.alb_sg_id]
 
   tags = {
     Environment = var.environment

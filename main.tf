@@ -37,14 +37,13 @@ module "iam" {
 # ECS Module
 module "ecs" {
   source = "./modules/ecs"
-  name        = var.name
-  environment = var.environment
-  vpc_id      = module.vpc.vpc_id
-  public_subnets  = module.vpc.public_subnets
+  cluster_name = var.name
+  environment  = var.environment
+  region       = var.region
+  vpc_id       = module.vpc.vpc_id
+  public_subnets = module.vpc.public_subnets
   private_subnets = module.vpc.private_subnets
-  ecs_sg_id  = module.security.ecs_sg_id
-  execution_role_arn = module.iam.ecs_task_execution_role_arn
-  task_role_arn      = module.iam.ecs_task_role_arn
+  alb_sg_id    = module.security.alb_sg_id
 }
 
 # RDS Module

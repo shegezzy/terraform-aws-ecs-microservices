@@ -18,12 +18,7 @@ output "task_definitions" {
   value       = { for k, v in aws_ecs_task_definition.task : k => v.arn }
 }
 
-output "alb_security_group_id" {
-  description = "Security group ID for ALB"
-  value       = aws_security_group.alb_sg.id
-}
-
-output "service_security_group_id" {
-  description = "Security group ID for ECS services"
+output "ecs_sg_id" {
+  description = "ID of the ECS services security group"
   value       = aws_security_group.service_sg.id
 }
