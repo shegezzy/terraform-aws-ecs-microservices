@@ -245,13 +245,6 @@ terraform refresh
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the CODEBASE_EXPLANATION.md for detailed technical documentation
-- Review AWS documentation for service-specific guidance
-
 ---
 
 **Note**: This infrastructure is designed for microservices architectures. For monolithic applications, consider simplifying the setup by removing MSK and adjusting scaling configurations.
