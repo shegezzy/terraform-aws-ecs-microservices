@@ -1,11 +1,18 @@
 .terraform/
 .terraform/
+.terraform/
 # Terraform local files
 .terraform/
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 crash.log
+
+# Terraform local caches
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
 
 # Sensitive variable files
 *.tfvars
@@ -18,3 +25,11 @@ crash.log
 
 
 explanation of the arhictecture.md
+
+# Terraform local files
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+terraform.tfvars
+.terraform.lock.hcl
