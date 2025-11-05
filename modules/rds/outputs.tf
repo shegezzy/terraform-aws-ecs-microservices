@@ -1,0 +1,19 @@
+output "rds_endpoint" {
+  description = "Endpoint of the RDS PostgreSQL instance"
+  value       = aws_db_instance.this.endpoint
+}
+
+output "rds_port" {
+  description = "Port of the RDS PostgreSQL instance"
+  value       = aws_db_instance.this.port
+}
+
+output "rds_id" {
+  description = "RDS instance ID"
+  value       = aws_db_instance.this.id
+}
+
+output "db_secret_arn" {
+  description = "ARN of the Secrets Manager secret containing DB credentials"
+  value       = aws_secretsmanager_secret.db_secret.arn
+}
