@@ -216,35 +216,5 @@ modules/
 2. **IAM Permission Errors**: Verify role policies
 3. **Resource Limits**: Check service limits and quotas
 4. **Network Connectivity**: Verify route tables and security groups
-
-### Debug Commands
-
-```bash
-# Check Terraform state
-terraform state list
-
-# View resource details
-terraform state show aws_ecs_cluster.this
-
-# Validate configuration
-terraform validate
-
-# Refresh state
-terraform refresh
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make changes with proper documentation
-4. Test thoroughly in staging environment
-5. Submit pull request with detailed description
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-**Note**: This infrastructure is designed for microservices architectures. For monolithic applications, consider simplifying the setup by removing MSK and adjusting scaling configurations.
