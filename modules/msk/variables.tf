@@ -70,3 +70,9 @@ variable "cloudwatch_log_group" {
   type        = string
   description = "CloudWatch log group for MSK broker logs"
 }
+
+variable "kafka_port" {
+  type        = number
+  default     = 9092
+  description = "Kafka port"
+}

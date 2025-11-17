@@ -12,3 +12,4 @@ output "ecs_task_policy_arn" {
   description = "ARN of ECS Task Policy attached to task role"
   value       = aws_iam_policy.ecs_task_policy.arn
 }
+

@@ -10,6 +10,8 @@ resource "aws_db_subnet_group" "this" {
   }
 }
 
+
+
 # Secrets Manager - DB Credentials
 resource "aws_secretsmanager_secret" "db_secret" {
   name        = "${var.name}-db-secret"
@@ -36,7 +38,7 @@ resource "aws_db_instance" "this" {
   instance_class     = var.instance_class
   allocated_storage  = var.allocated_storage
   max_allocated_storage = var.max_allocated_storage
-  name               = var.db_name
+  db_name            = var.db_name
   username           = var.username
   password           = var.password
   port               = var.port

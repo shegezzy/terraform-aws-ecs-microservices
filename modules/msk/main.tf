@@ -35,8 +35,12 @@ resource "aws_msk_cluster" "this" {
   enhanced_monitoring    = var.monitoring_level
 
   broker_node_group_info {
-    instance_type   = var.broker_instance_type
-    ebs_volume_size = var.ebs_volume_size
+    instance_type = var.broker_instance_type
+    storage_info {
+      ebs_storage_info {
+        volume_size = var.ebs_volume_size
+      }
+    }
     client_subnets  = var.private_subnets
     security_groups = [aws_security_group.msk_sg.id]
   }

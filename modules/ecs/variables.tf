@@ -34,6 +34,16 @@ variable "alb_sg_id" {
   description = "Security group ID for ALB"
 }
 
+variable "execution_role_arn" {
+  type        = string
+  description = "ARN of the ECS task execution role"
+}
+
+variable "task_role_arn" {
+  type        = string
+  description = "ARN of the ECS task role"
+}
+
 variable "services" {
   type = map(object({
     image          = string

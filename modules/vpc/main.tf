@@ -53,7 +53,7 @@ resource "aws_subnet" "private" {
 # NAT Gateways
 resource "aws_eip" "nat" {
   for_each = aws_subnet.public
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name        = "${var.name}-nat-eip-${each.key}"

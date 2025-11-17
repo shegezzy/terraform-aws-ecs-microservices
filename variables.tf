@@ -43,3 +43,20 @@ variable "msk_log_group" {
   type        = string
   description = "CloudWatch log group for MSK brokers"
 }
+
+variable "services" {
+  type = map(object({
+    image          = string
+    container_port = number
+    cpu            = number
+    memory         = number
+    desired_count  = number
+    autoscaling    = object({
+      min = number
+      max = number
+    })
+    env     = list(object({ name = string, value = string }))
+    secrets = list(object({ name = string, valueFrom = string }))
+  }))
+  description = "Map of ECS services with configuration"
+}

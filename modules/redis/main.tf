@@ -41,21 +41,21 @@ resource "aws_elasticache_subnet_group" "this" {
 
 # Redis Cluster
 resource "aws_elasticache_replication_group" "this" {
-  replication_group_id          = "${var.name}-redis"
-  replication_group_description = "Redis replication group for microservices"
-  engine                        = "redis"
-  engine_version                = var.engine_version
-  node_type                     = var.node_type
-  number_cache_clusters         = var.num_cache_clusters
-  automatic_failover_enabled    = var.multi_az
-  subnet_group_name             = aws_elasticache_subnet_group.this.name
-  security_group_ids            = [aws_security_group.redis_sg.id]
-  port                          = var.port
-  parameter_group_name          = "default.redis6.x"
-  maintenance_window            = var.maintenance_window
-  apply_immediately             = true
-  transit_encryption_enabled    = true
-  at_rest_encryption_enabled    = true
+  replication_group_id       = "${var.name}-redis"
+  description                = "Redis replication group for microservices"
+  engine                     = "redis"
+  engine_version             = var.engine_version
+  node_type                  = var.node_type
+  num_cache_clusters         = var.num_cache_clusters
+  automatic_failover_enabled = var.multi_az
+  subnet_group_name          = aws_elasticache_subnet_group.this.name
+  security_group_ids         = [aws_security_group.redis_sg.id]
+  port                       = var.port
+  parameter_group_name       = "default.redis6.x"
+  maintenance_window         = var.maintenance_window
+  apply_immediately          = true
+  transit_encryption_enabled = true
+  at_rest_encryption_enabled = true
   tags = {
     Name        = "${var.name}-redis"
     Environment = var.environment

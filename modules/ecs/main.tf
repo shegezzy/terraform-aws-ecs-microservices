@@ -1,7 +1,8 @@
-# ECS Cluster
+########################################
+# ECS CLUSTER
+########################################
 resource "aws_ecs_cluster" "this" {
   name = var.cluster_name
-  capacity_providers = ["FARGATE", "FARGATE_SPOT"]
 
   tags = {
     Name        = var.cluster_name
@@ -9,7 +10,9 @@ resource "aws_ecs_cluster" "this" {
   }
 }
 
-# ECS Services SG
+########################################
+# SECURITY GROUP FOR SERVICES
+########################################
 resource "aws_security_group" "service_sg" {
   name        = "${var.cluster_name}-svc-sg"
   description = "Security group for ECS services"
@@ -34,8 +37,9 @@ resource "aws_security_group" "service_sg" {
   }
 }
 
-
-# ALB
+########################################
+# APPLICATION LOAD BALANCER
+########################################
 resource "aws_lb" "alb" {
   name               = "${var.cluster_name}-alb"
   load_balancer_type = "application"
@@ -47,8 +51,9 @@ resource "aws_lb" "alb" {
   }
 }
 
-
-# Target Groups
+########################################
+# TARGET GROUPS (ONE PER SERVICE)
+########################################
 resource "aws_lb_target_group" "tg" {
   for_each = var.services
 
@@ -71,8 +76,9 @@ resource "aws_lb_target_group" "tg" {
   }
 }
 
-
-# ALB Listener
+########################################
+# ALB LISTENER
+########################################
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.id
   port              = 80
@@ -88,10 +94,9 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-# IAM Roles are now managed by the IAM module
-
-
-# ECS Task Definitions
+########################################
+# ECS TASK DEFINITIONS
+########################################
 resource "aws_ecs_task_definition" "task" {
   for_each = var.services
 
@@ -107,7 +112,12 @@ resource "aws_ecs_task_definition" "task" {
     {
       name      = each.key
       image     = each.value.image
-      portMappings = [{ containerPort = each.value.container_port, protocol = "tcp" }]
+      portMappings = [
+        {
+          containerPort = each.value.container_port
+          protocol      = "tcp"
+        }
+      ]
       environment  = each.value.env
       secrets      = each.value.secrets
       logConfiguration = {
@@ -122,8 +132,9 @@ resource "aws_ecs_task_definition" "task" {
   ])
 }
 
-
-# ECS Services
+########################################
+# ECS SERVICES
+########################################
 resource "aws_ecs_service" "svc" {
   for_each = aws_ecs_task_definition.task
 
@@ -148,8 +159,9 @@ resource "aws_ecs_service" "svc" {
   depends_on = [aws_lb_listener.http]
 }
 
-
-# Auto Scaling
+########################################
+# AUTOSCALING
+########################################
 resource "aws_appautoscaling_target" "ecs_scaling_target" {
   for_each = aws_ecs_service.svc
 
@@ -164,10 +176,10 @@ resource "aws_appautoscaling_policy" "cpu_policy" {
   for_each = aws_appautoscaling_target.ecs_scaling_target
 
   name                   = "${each.key}-cpu-policy"
-  policy_type             = "TargetTrackingScaling"
-  resource_id             = each.value.resource_id
-  scalable_dimension      = each.value.scalable_dimension
-  service_namespace       = each.value.service_namespace
+  policy_type            = "TargetTrackingScaling"
+  resource_id            = each.value.resource_id
+  scalable_dimension     = each.value.scalable_dimension
+  service_namespace      = each.value.service_namespace
 
   target_tracking_scaling_policy_configuration {
     predefined_metric_specification {
